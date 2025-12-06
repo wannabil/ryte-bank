@@ -210,7 +210,7 @@ function Step2() {
       <div className="relative z-10">
         <h2 className="text-4xl font-bold tracking-tight mb-8 drop-shadow-lg">
           AI that understands <br />
-          <span className="text-[#00c6ff]">your life</span>.
+          <span className="text-white">your life</span>.
         </h2>
 
         <div className="space-y-4">

@@ -94,6 +94,11 @@ export default function HomePage() {
     setIsExpanded(!isExpanded);
   };
 
+  const detailsVariants = {
+    hidden: { height: 0, opacity: 0, marginTop: 0 },
+    visible: { height: "auto", opacity: 1, marginTop: 12, transition: { duration: 0.3, ease: "easeInOut" } }
+  };
+
   return (
     <div className="min-h-screen bg-white text-gray-900 pb-28 relative overflow-x-hidden">
       <FullScreenCoin isVisible={isLoading} />
@@ -195,24 +200,36 @@ export default function HomePage() {
                         <TiltCard className="border-l-4 border-l-red-500/80 p-5 bg-white shadow-sm border-gray-100">
                             <div>
                                 <h4 className="font-bold text-lg text-gray-900">Netflix Subscription</h4>
-                                <p className="text-sm text-gray-600 mt-1 leading-relaxed">
-                                    Pay now or save <span className="text-gray-900 font-bold">RM14.99</span> by cancelling? You haven't watched in 22 days.
-                                </p>
-                                <div className="mt-3 flex gap-3">
-                                    <button 
-                                      onClick={handleCancelSubscription}
-                                      className="flex items-center justify-center gap-1.5 px-4 py-2 bg-red-50 text-red-600 rounded-lg text-xs font-bold hover:bg-red-100 transition-colors min-w-[100px]"
+                                <AnimatePresence>
+                                  {isExpanded && (
+                                    <motion.div
+                                      variants={detailsVariants}
+                                      initial="hidden"
+                                      animate="visible"
+                                      exit="hidden"
+                                      className="overflow-hidden"
                                     >
-                                      <Trash2 size={14} />
-                                      Cancel It
-                                    </button>
-                                    <button 
-                                      onClick={handleKeepSubscription}
-                                      className="flex items-center justify-center gap-1.5 px-4 py-2 bg-gray-100 text-gray-700 rounded-lg text-xs font-bold hover:bg-gray-200 transition-colors min-w-[80px]"
-                                    >
-                                      Keep
-                                    </button>
-                                </div>
+                                      <p className="text-sm text-gray-600 leading-relaxed">
+                                          Pay now or save <span className="text-gray-900 font-bold">RM14.99</span> by cancelling? You haven't watched in 22 days.
+                                      </p>
+                                      <div className="mt-3 flex gap-3">
+                                          <button 
+                                            onClick={handleCancelSubscription}
+                                            className="flex items-center justify-center gap-1.5 px-4 py-2 bg-red-50 text-red-600 rounded-lg text-xs font-bold hover:bg-red-100 transition-colors min-w-[100px]"
+                                          >
+                                            <Trash2 size={14} />
+                                            Cancel It
+                                          </button>
+                                          <button 
+                                            onClick={handleKeepSubscription}
+                                            className="flex items-center justify-center gap-1.5 px-4 py-2 bg-gray-100 text-gray-700 rounded-lg text-xs font-bold hover:bg-gray-200 transition-colors min-w-[80px]"
+                                          >
+                                            Keep
+                                          </button>
+                                      </div>
+                                    </motion.div>
+                                  )}
+                                </AnimatePresence>
                             </div>
                         </TiltCard>
                     </motion.div>
@@ -230,12 +247,24 @@ export default function HomePage() {
                         <TiltCard className="border-l-4 border-l-emerald-500/80 p-5 cursor-pointer active:scale-[0.99] transition-transform bg-white shadow-sm border-gray-100" onClick={handleTransferToGoal}>
                             <div>
                                 <h4 className="font-bold text-lg text-gray-900">Japan Trip Goal</h4>
-                                <p className="text-sm text-gray-600 mt-1 leading-relaxed">
-                                    Tap to transfer <span className="text-gray-900 font-bold">RM400</span> to reach 67%? You have excess cash flow.
-                                </p>
-                                <div className="w-full h-1 bg-gray-200 rounded-full mt-3 overflow-hidden">
-                                    <div className="h-full bg-emerald-500 w-[67%]" />
-                                </div>
+                                <AnimatePresence>
+                                  {isExpanded && (
+                                    <motion.div
+                                      variants={detailsVariants}
+                                      initial="hidden"
+                                      animate="visible"
+                                      exit="hidden"
+                                      className="overflow-hidden"
+                                    >
+                                      <p className="text-sm text-gray-600 leading-relaxed">
+                                          Tap to transfer <span className="text-gray-900 font-bold">RM400</span> to reach 67%? You have excess cash flow.
+                                      </p>
+                                      <div className="w-full h-1 bg-gray-200 rounded-full mt-3 overflow-hidden">
+                                          <div className="h-full bg-emerald-500 w-[67%]" />
+                                      </div>
+                                    </motion.div>
+                                  )}
+                                </AnimatePresence>
                             </div>
                         </TiltCard>
                     </motion.div>
@@ -253,15 +282,27 @@ export default function HomePage() {
                         <TiltCard className="border-l-4 border-l-orange-500/80 p-5 bg-white shadow-sm border-gray-100">
                             <div>
                                 <h4 className="font-bold text-lg text-gray-900">Coffee Spending</h4>
-                                <p className="text-sm text-gray-600 mt-1 leading-relaxed">
-                                    You spent <span className="text-orange-600 font-bold">42% more</span> on coffee this week.
-                                </p>
-                                <button 
-                                  onClick={handleSetLimit}
-                                  className="mt-3 w-full py-2 bg-orange-50 text-orange-600 rounded-lg text-xs font-bold hover:bg-orange-100 transition-colors flex items-center justify-center"
-                                >
-                                  Set $25 Limit
-                                </button>
+                                <AnimatePresence>
+                                  {isExpanded && (
+                                    <motion.div
+                                      variants={detailsVariants}
+                                      initial="hidden"
+                                      animate="visible"
+                                      exit="hidden"
+                                      className="overflow-hidden"
+                                    >
+                                      <p className="text-sm text-gray-600 leading-relaxed">
+                                          You spent <span className="text-orange-600 font-bold">42% more</span> on coffee this week.
+                                      </p>
+                                      <button 
+                                        onClick={handleSetLimit}
+                                        className="mt-3 w-full py-2 bg-orange-50 text-orange-600 rounded-lg text-xs font-bold hover:bg-orange-100 transition-colors flex items-center justify-center"
+                                      >
+                                        Set $25 Limit
+                                      </button>
+                                    </motion.div>
+                                  )}
+                                </AnimatePresence>
                             </div>
                         </TiltCard>
                     </motion.div>
@@ -280,15 +321,27 @@ export default function HomePage() {
                         <TiltCard className="border-l-4 border-l-blue-500/80 p-5 bg-white shadow-sm border-gray-100">
                             <div>
                                 <h4 className="font-bold text-lg text-gray-900">Upcoming Bill</h4>
-                                <p className="text-sm text-gray-600 mt-1 leading-relaxed">
-                                    Internet bill of <span className="text-gray-900 font-bold">$120</span> is due tomorrow. Pay now to avoid late fees?
-                                </p>
-                                <button 
-                                  onClick={handlePayBill}
-                                  className="mt-3 w-full py-2 bg-blue-50 text-blue-600 rounded-lg text-xs font-bold hover:bg-blue-100 transition-colors flex items-center justify-center gap-2"
-                                >
-                                  <CreditCard size={14} /> Pay Now
-                                </button>
+                                <AnimatePresence>
+                                  {isExpanded && (
+                                    <motion.div
+                                      variants={detailsVariants}
+                                      initial="hidden"
+                                      animate="visible"
+                                      exit="hidden"
+                                      className="overflow-hidden"
+                                    >
+                                      <p className="text-sm text-gray-600 leading-relaxed">
+                                          Internet bill of <span className="text-gray-900 font-bold">$120</span> is due tomorrow. Pay now to avoid late fees?
+                                      </p>
+                                      <button 
+                                        onClick={handlePayBill}
+                                        className="mt-3 w-full py-2 bg-blue-50 text-blue-600 rounded-lg text-xs font-bold hover:bg-blue-100 transition-colors flex items-center justify-center gap-2"
+                                      >
+                                        <CreditCard size={14} /> Pay Now
+                                      </button>
+                                    </motion.div>
+                                  )}
+                                </AnimatePresence>
                             </div>
                         </TiltCard>
                     </motion.div>
@@ -307,15 +360,27 @@ export default function HomePage() {
                         <TiltCard className="border-l-4 border-l-purple-500/80 p-5 bg-white shadow-sm border-gray-100">
                             <div>
                                 <h4 className="font-bold text-lg text-gray-900">Salary Incoming</h4>
-                                <p className="text-sm text-gray-600 mt-1 leading-relaxed">
-                                    Your salary is expected to hit your account on <span className="text-gray-900 font-bold">Friday</span>.
-                                </p>
-                                <button 
-                                  onClick={handleCheckSalary}
-                                  className="mt-3 w-full py-2 bg-purple-50 text-purple-600 rounded-lg text-xs font-bold hover:bg-purple-100 transition-colors flex items-center justify-center gap-2"
-                                >
-                                  <DollarSign size={14} /> View Breakdown
-                                </button>
+                                <AnimatePresence>
+                                  {isExpanded && (
+                                    <motion.div
+                                      variants={detailsVariants}
+                                      initial="hidden"
+                                      animate="visible"
+                                      exit="hidden"
+                                      className="overflow-hidden"
+                                    >
+                                      <p className="text-sm text-gray-600 leading-relaxed">
+                                          Your salary is expected to hit your account on <span className="text-gray-900 font-bold">Friday</span>.
+                                      </p>
+                                      <button 
+                                        onClick={handleCheckSalary}
+                                        className="mt-3 w-full py-2 bg-purple-50 text-purple-600 rounded-lg text-xs font-bold hover:bg-purple-100 transition-colors flex items-center justify-center gap-2"
+                                      >
+                                        <DollarSign size={14} /> View Breakdown
+                                      </button>
+                                    </motion.div>
+                                  )}
+                                </AnimatePresence>
                             </div>
                         </TiltCard>
                     </motion.div>
@@ -334,15 +399,27 @@ export default function HomePage() {
                         <TiltCard className="border-l-4 border-l-green-500/80 p-5 bg-white shadow-sm border-gray-100">
                             <div>
                                 <h4 className="font-bold text-lg text-gray-900">Tech ETF Dip</h4>
-                                <p className="text-sm text-gray-600 mt-1 leading-relaxed">
-                                    Tech sector is down 2.4%. Good time to deploy <span className="text-gray-900 font-bold">$500</span>?
-                                </p>
-                                <button 
-                                  onClick={handleInvestAction}
-                                  className="mt-3 w-full py-2 bg-green-50 text-green-600 rounded-lg text-xs font-bold hover:bg-green-100 transition-colors flex items-center justify-center gap-2"
-                                >
-                                  <TrendingUp size={14} /> Invest Now
-                                </button>
+                                <AnimatePresence>
+                                  {isExpanded && (
+                                    <motion.div
+                                      variants={detailsVariants}
+                                      initial="hidden"
+                                      animate="visible"
+                                      exit="hidden"
+                                      className="overflow-hidden"
+                                    >
+                                      <p className="text-sm text-gray-600 leading-relaxed">
+                                          Tech sector is down 2.4%. Good time to deploy <span className="text-gray-900 font-bold">$500</span>?
+                                      </p>
+                                      <button 
+                                        onClick={handleInvestAction}
+                                        className="mt-3 w-full py-2 bg-green-50 text-green-600 rounded-lg text-xs font-bold hover:bg-green-100 transition-colors flex items-center justify-center gap-2"
+                                      >
+                                        <TrendingUp size={14} /> Invest Now
+                                      </button>
+                                    </motion.div>
+                                  )}
+                                </AnimatePresence>
                             </div>
                         </TiltCard>
                     </motion.div>
