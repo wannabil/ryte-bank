@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, Variants } from "framer-motion";
 import { Plus, TrendingUp, Coffee, AlertCircle, Plane, Trash2, Check, X, CreditCard, DollarSign, Smartphone, Eye, EyeOff } from "lucide-react";
 import Image from "next/image";
 import { BottomNav } from "@/components/BottomNav";
@@ -94,7 +94,7 @@ export default function HomePage() {
     setIsExpanded(!isExpanded);
   };
 
-  const detailsVariants = {
+  const detailsVariants: Variants = {
     hidden: { height: 0, opacity: 0, marginTop: 0 },
     visible: { height: "auto", opacity: 1, marginTop: 12, transition: { duration: 0.3, ease: "easeInOut" } }
   };
