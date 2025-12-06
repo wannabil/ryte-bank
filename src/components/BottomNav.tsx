@@ -50,7 +50,7 @@ function FarewellSplash({ onClose }: { onClose: () => void }) {
       className="fixed inset-0 z-[100] bg-black flex items-center justify-center"
       onClick={onClose}
     >
-      <TypewriterText text="Thank you for your time, this has been fun." onComplete={onClose} />
+      <TypewriterText text="Thank you for your time" onComplete={onClose} />
     </motion.div>
   );
 }
