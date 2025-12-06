@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { Home, MessageSquare, Lock, Power } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { clsx } from "clsx";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 function TypewriterText({ text, onComplete }: { text: string; onComplete?: () => void }) {
   const [displayedText, setDisplayedText] = useState("");
@@ -13,8 +13,8 @@ function TypewriterText({ text, onComplete }: { text: string; onComplete?: () =>
   useEffect(() => {
     let index = 0;
     const timer = setInterval(() => {
-      if (index < text.length) {
-        setDisplayedText((prev) => prev + text.charAt(index));
+      if (index <= text.length) {
+        setDisplayedText(text.slice(0, index));
         index++;
       } else {
         clearInterval(timer);
@@ -59,6 +59,8 @@ export function BottomNav() {
   const pathname = usePathname();
   const [showFarewell, setShowFarewell] = useState(false);
 
+  const handleFarewellClose = useCallback(() => setShowFarewell(false), []);
+
   const tabs = [
     { name: "Home", href: "/home", icon: Home },
     { name: "Assistant", href: "/assistant", icon: MessageSquare },
@@ -70,7 +72,7 @@ export function BottomNav() {
   return (
     <>
       <AnimatePresence>
-        {showFarewell && <FarewellSplash onClose={() => setShowFarewell(false)} />}
+        {showFarewell && <FarewellSplash onClose={handleFarewellClose} />}
       </AnimatePresence>
 
       <div className={clsx(
