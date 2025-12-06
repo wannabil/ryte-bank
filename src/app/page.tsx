@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { ChevronRight } from "lucide-react";
@@ -12,6 +12,7 @@ import Counter from "@/components/ui/Counter";
 export default function Onboarding() {
   const [step, setStep] = useState(0);
   const [isExiting, setIsExiting] = useState(false);
+  const [showIntro, setShowIntro] = useState(true);
   const router = useRouter();
 
   const handleNext = () => {
@@ -27,6 +28,12 @@ export default function Onboarding() {
 
   return (
     <main className="flex flex-col h-screen w-full overflow-hidden bg-black text-white relative select-none">
+       {/* Initial Splash Intro */}
+       <AnimatePresence>
+         {showIntro && <IntroSplash onComplete={() => setShowIntro(false)} />}
+       </AnimatePresence>
+
+       {/* Splash Transition Overlay (Exit) */}
        <AnimatePresence>
         {isExiting && (
           <motion.div
@@ -50,40 +57,88 @@ export default function Onboarding() {
         )}
       </AnimatePresence>
 
-      <div className="flex-1 relative">
-        <AnimatePresence mode="wait">
-          {step === 0 && <Step1 key="step1" />}
-          {step === 1 && <Step2 key="step2" />}
-          {step === 2 && <Step3 key="step3" />}
-        </AnimatePresence>
-      </div>
+      {!showIntro && (
+        <div className="flex-1 relative h-full">
+          <AnimatePresence mode="wait">
+            {step === 0 && <Step1 key="step1" />}
+            {step === 1 && <Step2 key="step2" />}
+            {step === 2 && <Step3 key="step3" />}
+          </AnimatePresence>
 
-      {!isExiting && (
-        <motion.div 
-            exit={{ opacity: 0, y: 50 }}
-            className="absolute bottom-12 left-0 right-0 px-8 z-20 flex justify-between items-center"
-        >
-            <div className="flex gap-3">
-            {[0, 1, 2].map((i) => (
-                <div
-                key={i}
-                className={clsx(
-                    "h-2 rounded-full transition-all duration-500 shadow-lg",
-                    i === step ? "w-8 bg-[#0000e6] shadow-[0_0_10px_#0000e6]" : "w-2 bg-white/40 backdrop-blur-sm"
-                )}
-                />
-            ))}
-            </div>
-
-            <button
-            onClick={handleNext}
-            className="flex items-center justify-center w-16 h-16 rounded-full bg-[#fefeff] text-black shadow-lg hover:bg-gray-100 active:scale-90 transition-all duration-300"
+          {/* Bottom Controls */}
+          {!isExiting && (
+            <motion.div 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0, y: 50 }}
+                transition={{ delay: 0.5 }}
+                className="absolute bottom-12 left-0 right-0 px-8 z-20 flex justify-between items-center"
             >
-            <ChevronRight size={28} strokeWidth={3} />
-            </button>
-        </motion.div>
+                <div className="flex gap-3">
+                {[0, 1, 2].map((i) => (
+                    <div
+                    key={i}
+                    className={clsx(
+                        "h-2 rounded-full transition-all duration-500 shadow-lg",
+                        i === step ? "w-8 bg-[#0000e6] shadow-[0_0_10px_#0000e6]" : "w-2 bg-white/40 backdrop-blur-sm"
+                    )}
+                    />
+                ))}
+                </div>
+
+                <button
+                onClick={handleNext}
+                className="flex items-center justify-center w-16 h-16 rounded-full bg-[#fefeff] text-black shadow-lg hover:bg-gray-100 active:scale-90 transition-all duration-300"
+                >
+                <ChevronRight size={28} strokeWidth={3} />
+                </button>
+            </motion.div>
+          )}
+        </div>
       )}
     </main>
+  );
+}
+
+function IntroSplash({ onComplete }: { onComplete: () => void }) {
+  const [textIndex, setTextIndex] = useState(0);
+  const texts = [
+    "Ryt Bank needs Future Design",
+    "Introducing Ryte Bank",
+    "Improvements of design of Ryt Bank in less than 6 hours"
+  ];
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (textIndex < texts.length - 1) {
+        setTextIndex(textIndex + 1);
+      } else {
+        setTimeout(onComplete, 2000); // Wait a bit after last text
+      }
+    }, 2500); // Duration for each text
+
+    return () => clearTimeout(timer);
+  }, [textIndex, onComplete, texts.length]);
+
+  return (
+    <motion.div
+      className="fixed inset-0 z-[100] bg-black flex items-center justify-center px-8 text-center"
+      exit={{ opacity: 0, transition: { duration: 0.8 } }}
+    >
+      <AnimatePresence mode="wait">
+        <motion.h1
+          key={textIndex}
+          initial={{ opacity: 0, y: 20, filter: "blur(10px)" }}
+          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          exit={{ opacity: 0, y: -20, filter: "blur(10px)" }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="text-3xl md:text-5xl font-bold tracking-tight leading-tight text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-white to-blue-400 animate-gradient-x"
+          style={{ backgroundSize: "200% auto" }}
+        >
+          {texts[textIndex]}
+        </motion.h1>
+      </AnimatePresence>
+    </motion.div>
   );
 }
 
@@ -110,7 +165,7 @@ function Step1() {
       <div className="relative z-10">
         <h1 className="text-5xl font-bold tracking-tighter mb-4 drop-shadow-lg">
           Welcome to <br />
-          <span className="text-[#00c6ff]">
+          <span className="text-white">
             the future
           </span>
           <br />
@@ -228,7 +283,7 @@ function Step3() {
             <span className="text-green-400">+12.4%</span>
           </div>
           <div className="text-4xl font-mono font-bold text-white">
-            <Counter value={24681.00} prefix="$" duration={1} />
+            <Counter value={24681.00} prefix="RM" duration={1} />
           </div>
         </div>
       </div>

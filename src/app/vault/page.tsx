@@ -2,9 +2,10 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { TrendingUp, Bitcoin, DollarSign, Zap, BrainCircuit, ArrowRight, Loader2, Info, X, Eye, EyeOff } from "lucide-react";
+import { TrendingUp, Bitcoin, DollarSign, Zap, BrainCircuit, ArrowRight, Loader2, Info, X, Eye, EyeOff, Clock, ArrowUpRight, ArrowDownLeft } from "lucide-react";
 import { BottomNav } from "@/components/BottomNav";
-import { GlassCard } from "@/components/ui/GlassCard";
+import { Card, CardContent } from "@/components/ui/card";
+import { TiltCard } from "@/components/ui/TiltCard";
 import { toast } from "sonner";
 import { clsx } from "clsx";
 import { FullScreenCoin } from "@/components/ui/LoadingCoin";
@@ -14,7 +15,7 @@ export default function VaultPage() {
   
   const [isLoading, setIsLoading] = useState(false);
   const [isExecutedBTC, setIsExecutedBTC] = useState(false);
-  const [netWorth, setNetWorth] = useState(84290);
+  const [netWorth, setNetWorth] = useState(6767);
   const [showInfo, setShowInfo] = useState(false);
   const [isBalanceVisible, setIsBalanceVisible] = useState(true);
 
@@ -34,20 +35,26 @@ export default function VaultPage() {
     setIsLoading(true);
     setTimeout(() => {
         setIsLoading(false);
-        toast.success("Transferred $5,000 to S&P 500 Index");
+        toast.success("Transferred RM5,000 to S&P 500 Index");
     }, 1000);
   };
 
   const formatCurrency = (value: number) => {
     return new Intl.NumberFormat('en-US', {
       style: 'currency',
-      currency: 'USD',
+      currency: 'MYR',
       maximumFractionDigits: 0
-    }).format(value);
+    }).format(value).replace('MYR', 'RM');
   };
 
+  const transactions = [
+    { id: 1, title: "Apple Inc.", amount: "+RM1,240.50", date: "Today, 10:23 AM", icon: ArrowUpRight, color: "text-green-600", bg: "bg-green-100" },
+    { id: 2, title: "Tesla Stock", amount: "-RM850.00", date: "Yesterday", icon: ArrowDownLeft, color: "text-red-600", bg: "bg-red-100" },
+    { id: 3, title: "Monthly Dividend", amount: "+RM45.20", date: "Dec 01", icon: (props: any) => <span className={props.className} style={{ fontSize: 14, fontWeight: 'bold' }}>RM</span>, color: "text-blue-600", bg: "bg-blue-100" },
+  ];
+
   return (
-    <div className="min-h-screen bg-gray-50 text-gray-900 pb-32 relative overflow-x-hidden">
+    <div className="min-h-screen bg-white text-gray-900 pb-32 relative overflow-x-hidden">
        <FullScreenCoin isVisible={isLoading} />
 
        <AnimatePresence>
@@ -109,7 +116,7 @@ export default function VaultPage() {
          )}
        </AnimatePresence>
 
-       <header className="px-6 pt-14 pb-6 flex justify-between items-center">
+       <header className="p-6 pt-14 flex justify-between items-center">
           <div>
             <h1 className="text-3xl font-bold tracking-tight text-gray-900">Intelligent Vault</h1>
             <p className="text-gray-500 text-sm">AI-Managed Wealth</p>
@@ -163,13 +170,13 @@ export default function VaultPage() {
                 
                 <div className="absolute inset-0 flex flex-col items-center justify-center z-10">
                     <span className="text-gray-400 text-xs uppercase tracking-wider font-medium mb-1">Net Worth</span>
-                    <div className="flex items-center gap-2 w-[140px] justify-center relative">
+                    <div className="flex flex-col items-center gap-2 justify-center relative">
                         <span className="text-3xl font-bold text-gray-900 tracking-tight">
                             {isBalanceVisible ? formatCurrency(netWorth) : "••••••"}
                         </span>
                         <button 
                         onClick={() => setIsBalanceVisible(!isBalanceVisible)}
-                        className="absolute -right-8 text-gray-400 hover:text-gray-600 transition-colors p-2"
+                        className="text-gray-400 hover:text-gray-600 transition-colors p-2"
                         >
                         {isBalanceVisible ? <EyeOff size={16} /> : <Eye size={16} />}
                         </button>
@@ -184,7 +191,7 @@ export default function VaultPage() {
                 className="flex justify-center flex-wrap gap-4 text-xs font-medium text-gray-500 mt-6"
             >
                 <div className="flex items-center gap-2"><div className="w-3 h-3 rounded-full bg-[#0000e6]" /> Stocks 48%</div>
-                <div className="flex items-center gap-2"><div className="w-3 h-3 rounded-full bg-[#00c6ff]" /> AI Alpha 30%</div>
+                <div className="flex items-center gap-2"><div className="w-3 h-3 rounded-full bg-[#00c6ff]" /> Cash 30%</div>
                 <div className="flex items-center gap-2"><div className="w-3 h-3 rounded-full bg-[#7c3aed]" /> Crypto 22%</div>
             </motion.div>
           </div>
@@ -206,10 +213,10 @@ export default function VaultPage() {
              
              <div className="space-y-4">
                  {!isExecutedBTC ? (
-                     <GlassCard className="border border-gray-200 group hover:border-[#0000e6]/50 bg-white shadow-sm">
+                     <TiltCard className="border-l-4 border-l-orange-500/80 p-6 bg-white shadow-sm border-gray-100">
                         <div className="flex justify-between items-start mb-2">
                             <div className="flex items-center gap-3">
-                                <div className="p-2.5 bg-orange-50 text-orange-600 border border-orange-100 rounded-xl"><Bitcoin size={20} /></div>
+                                <Bitcoin size={20} className="text-orange-600" />
                                 <h4 className="font-bold text-gray-900">Buy 0.42 BTC</h4>
                             </div>
                             <span className="text-green-600 text-xs font-bold bg-green-50 px-2 py-1 rounded border border-green-100">+41% Proj.</span>
@@ -222,14 +229,14 @@ export default function VaultPage() {
                         >
                             Execute Trade <ArrowRight size={18} />
                         </button>
-                     </GlassCard>
+                     </TiltCard>
                  ) : (
                     <motion.div 
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
                     >
-                        <GlassCard className="border border-green-200 bg-green-50/50 shadow-sm">
-                            <div className="flex items-center gap-4 py-2">
+                        <Card className="border-green-200 bg-green-50/50 shadow-sm">
+                            <CardContent className="p-6 flex items-center gap-4">
                                 <div className="p-3 bg-green-100 text-green-600 rounded-full">
                                     <TrendingUp size={24} />
                                 </div>
@@ -237,16 +244,16 @@ export default function VaultPage() {
                                     <h4 className="font-bold text-gray-900">Trade Executed</h4>
                                     <p className="text-sm text-gray-600">You successfully bought 0.42 BTC.</p>
                                 </div>
-                            </div>
-                        </GlassCard>
+                            </CardContent>
+                        </Card>
                     </motion.div>
                  )}
                  
-                 <GlassCard className="border border-gray-200 group hover:border-[#0000e6]/50 bg-white shadow-sm">
+                 <TiltCard className="border-l-4 border-l-blue-500/80 p-6 bg-white shadow-sm border-gray-100">
                     <div className="flex justify-between items-start mb-2">
                         <div className="flex items-center gap-3">
-                            <div className="p-2.5 bg-blue-50 text-blue-600 border border-blue-100 rounded-xl"><DollarSign size={20} /></div>
-                            <h4 className="font-bold text-gray-900">Move $5k to S&P 500</h4>
+                            <div className="p-2 bg-blue-500/20 rounded-xl text-blue-400">RM</div>
+                            <h4 className="font-bold text-gray-900">Move RM5k to S&P 500</h4>
                         </div>
                         <span className="text-green-600 text-xs font-bold bg-green-50 px-2 py-1 rounded border border-green-100">+9.2% Yield</span>
                     </div>
@@ -258,7 +265,41 @@ export default function VaultPage() {
                     >
                         Transfer Funds <ArrowRight size={18} />
                     </button>
-                 </GlassCard>
+                 </TiltCard>
+             </div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6 }}
+          >
+             <div className="mb-4">
+                <h3 className="text-lg font-bold flex items-center gap-2 text-gray-900">
+                    <Clock size={18} className="text-gray-400" />
+                    Recent Transactions
+                </h3>
+             </div>
+             
+             <div className="space-y-3">
+                {transactions.map((tx) => (
+                    <Card key={tx.id} className="border-gray-200 shadow-sm hover:border-gray-300 transition-colors">
+                        <CardContent className="p-4 flex items-center justify-between">
+                            <div className="flex items-center gap-4">
+                                <div className={clsx("p-2.5 rounded-xl", tx.bg)}>
+                                    <tx.icon size={20} className={tx.color} />
+                                </div>
+                                <div>
+                                    <h4 className="font-bold text-gray-900 text-sm">{tx.title}</h4>
+                                    <p className="text-xs text-gray-500">{tx.date}</p>
+                                </div>
+                            </div>
+                            <span className={clsx("font-bold text-sm", tx.amount.startsWith('+') ? "text-green-600" : "text-gray-900")}>
+                                {tx.amount}
+                            </span>
+                        </CardContent>
+                    </Card>
+                ))}
              </div>
           </motion.div>
 

@@ -25,7 +25,7 @@ export function LoadingCoin({ size = 24, className }: { size?: number; className
             className="absolute inset-0 bg-white rounded-full border-2 border-black shadow-sm flex items-center justify-center text-black font-bold text-[10px]"
             style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
         >
-            $
+            RM
         </div>
       </motion.div>
     </div>
@@ -59,7 +59,7 @@ export function FullScreenCoin({ isVisible }: { isVisible: boolean }) {
             className="absolute inset-0 bg-white rounded-full border-4 border-black shadow-2xl flex items-center justify-center text-black font-bold text-4xl"
             style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
         >
-            $
+            RM
         </div>
       </motion.div>
     </div>
