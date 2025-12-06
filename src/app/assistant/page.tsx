@@ -67,7 +67,7 @@ export default function AssistantPage() {
       <motion.div
         initial={{ clipPath: "circle(0px at 50% calc(100% - 56px))" }}
         animate={{ clipPath: "circle(150% at 50% calc(100% - 56px))" }}
-        transition={{ duration: 0.5, ease: "circOut" }}
+        transition={{ duration: 1.5, ease: "circOut" }}
         className="absolute inset-0 z-0 flex flex-col"
       >
         <header className="p-4 border-b border-gray-200 bg-white/80 backdrop-blur-md z-20 flex justify-center items-center gap-2 fixed top-0 left-0 right-0">

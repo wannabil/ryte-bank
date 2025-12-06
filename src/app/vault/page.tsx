@@ -109,7 +109,7 @@ export default function VaultPage() {
          )}
        </AnimatePresence>
 
-       <header className="p-6 pt-14 flex justify-between items-center">
+       <header className="px-6 pt-14 pb-6 flex justify-between items-center">
           <div>
             <h1 className="text-3xl font-bold tracking-tight text-gray-900">Intelligent Vault</h1>
             <p className="text-gray-500 text-sm">AI-Managed Wealth</p>
@@ -134,63 +134,60 @@ export default function VaultPage() {
               </div>
           </motion.div>
           
-          <motion.div 
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ type: "spring", delay: 0.2 }}
-            className="relative w-72 h-72 mx-auto flex items-center justify-center"
-          >
-               <svg viewBox="0 0 100 100" className="w-full h-full -rotate-90 drop-shadow-xl">
-                   <circle cx="50" cy="50" r="40" stroke="#e5e7eb" strokeWidth="6" fill="none" />
-                   
-                   <motion.circle 
-                        initial={{ strokeDasharray: "0 251" }}
-                        animate={{ strokeDasharray: `${0.48 * ringCircumference} ${ringCircumference}` }}
-                        transition={{ duration: 1, delay: 0.4 }}
-                        cx="50" cy="50" r="40" stroke="#0000e6" strokeWidth="6" fill="none" strokeLinecap="round" 
-                    />
-                   <motion.circle 
-                        initial={{ strokeDasharray: "0 251" }}
-                        animate={{ strokeDasharray: `${0.30 * ringCircumference} ${ringCircumference}` }}
-                        transition={{ duration: 1, delay: 0.6 }}
-                        cx="50" cy="50" r="40" stroke="#00c6ff" strokeWidth="6" fill="none"
-                        strokeDashoffset={`-${0.48 * ringCircumference}`} strokeLinecap="round" 
-                    />
+          <div className="flex flex-col items-center">
+            <div className="relative w-64 h-64 flex items-center justify-center">
+                <svg viewBox="0 0 100 100" className="w-full h-full -rotate-90 drop-shadow-xl">
+                    <circle cx="50" cy="50" r="40" stroke="#e5e7eb" strokeWidth="6" fill="none" />
+                    
                     <motion.circle 
-                        initial={{ strokeDasharray: "0 251" }}
-                        animate={{ strokeDasharray: `${0.22 * ringCircumference} ${ringCircumference}` }}
-                        transition={{ duration: 1, delay: 0.8 }}
-                        cx="50" cy="50" r="40" stroke="#7c3aed" strokeWidth="6" fill="none"
-                        strokeDashoffset={`-${(0.48 + 0.30) * ringCircumference}`} strokeLinecap="round" 
-                    />
-               </svg>
-               
-               <div className="absolute inset-0 flex flex-col items-center justify-center z-10">
-                   <span className="text-gray-400 text-xs uppercase tracking-wider font-medium mb-1">Net Worth</span>
-                   <div className="flex items-center gap-2 w-[140px] justify-center relative">
-                     <span className="text-3xl font-bold text-gray-900 tracking-tight">
-                         {isBalanceVisible ? formatCurrency(netWorth) : "••••••"}
-                     </span>
-                     <button 
-                       onClick={() => setIsBalanceVisible(!isBalanceVisible)}
-                       className="absolute -right-8 text-gray-400 hover:text-gray-600 transition-colors p-2"
-                     >
-                       {isBalanceVisible ? <EyeOff size={16} /> : <Eye size={16} />}
-                     </button>
-                   </div>
-               </div>
-          </motion.div>
-          
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1 }}
-            className="flex justify-center flex-wrap gap-4 text-xs font-medium text-gray-500"
-          >
-             <div className="flex items-center gap-2"><div className="w-3 h-3 rounded-full bg-[#0000e6]" /> Stocks 48%</div>
-             <div className="flex items-center gap-2"><div className="w-3 h-3 rounded-full bg-[#00c6ff]" /> AI Alpha 30%</div>
-             <div className="flex items-center gap-2"><div className="w-3 h-3 rounded-full bg-[#7c3aed]" /> Crypto 22%</div>
-          </motion.div>
+                            initial={{ strokeDasharray: "0 251" }}
+                            animate={{ strokeDasharray: `${0.48 * ringCircumference} ${ringCircumference}` }}
+                            transition={{ duration: 1, delay: 0.4 }}
+                            cx="50" cy="50" r="40" stroke="#0000e6" strokeWidth="6" fill="none" strokeLinecap="round" 
+                        />
+                    <motion.circle 
+                            initial={{ strokeDasharray: "0 251" }}
+                            animate={{ strokeDasharray: `${0.30 * ringCircumference} ${ringCircumference}` }}
+                            transition={{ duration: 1, delay: 0.6 }}
+                            cx="50" cy="50" r="40" stroke="#00c6ff" strokeWidth="6" fill="none"
+                            strokeDashoffset={`-${0.48 * ringCircumference}`} strokeLinecap="round" 
+                        />
+                        <motion.circle 
+                            initial={{ strokeDasharray: "0 251" }}
+                            animate={{ strokeDasharray: `${0.22 * ringCircumference} ${ringCircumference}` }}
+                            transition={{ duration: 1, delay: 0.8 }}
+                            cx="50" cy="50" r="40" stroke="#7c3aed" strokeWidth="6" fill="none"
+                            strokeDashoffset={`-${(0.48 + 0.30) * ringCircumference}`} strokeLinecap="round" 
+                        />
+                </svg>
+                
+                <div className="absolute inset-0 flex flex-col items-center justify-center z-10">
+                    <span className="text-gray-400 text-xs uppercase tracking-wider font-medium mb-1">Net Worth</span>
+                    <div className="flex items-center gap-2 w-[140px] justify-center relative">
+                        <span className="text-3xl font-bold text-gray-900 tracking-tight">
+                            {isBalanceVisible ? formatCurrency(netWorth) : "••••••"}
+                        </span>
+                        <button 
+                        onClick={() => setIsBalanceVisible(!isBalanceVisible)}
+                        className="absolute -right-8 text-gray-400 hover:text-gray-600 transition-colors p-2"
+                        >
+                        {isBalanceVisible ? <EyeOff size={16} /> : <Eye size={16} />}
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <motion.div 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 1 }}
+                className="flex justify-center flex-wrap gap-4 text-xs font-medium text-gray-500 mt-6"
+            >
+                <div className="flex items-center gap-2"><div className="w-3 h-3 rounded-full bg-[#0000e6]" /> Stocks 48%</div>
+                <div className="flex items-center gap-2"><div className="w-3 h-3 rounded-full bg-[#00c6ff]" /> AI Alpha 30%</div>
+                <div className="flex items-center gap-2"><div className="w-3 h-3 rounded-full bg-[#7c3aed]" /> Crypto 22%</div>
+            </motion.div>
+          </div>
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
